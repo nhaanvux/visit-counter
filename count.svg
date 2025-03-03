@@ -22,7 +22,7 @@ $height = 26;
 $totalWidth = 105; // Tổng chiều rộng
 
 // Xuất SVG
-echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+echo '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
 <svg width="105" height="26" xmlns="http://www.w3.org/2000/svg">
     <defs>
@@ -42,5 +42,5 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
     <rect x="55" width="50" height="26" rx="6" ry="6" fill="url(#blueGradient)" />
 
     <!-- Số đếm -->
-    <text x="80" y="18" font-size="12" fill="white" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="bold"><?php echo $formattedCount; ?></text>
+    <text x="80" y="18" font-size="12" fill="white" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="bold"><?php echo htmlspecialchars($formattedCount); ?></text>
 </svg>
