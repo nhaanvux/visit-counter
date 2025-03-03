@@ -1,29 +1,16 @@
 <?php
-// Chặn cache trình duyệt
 header("Content-Type: image/svg+xml");
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Pragma: no-cache");
 header("Expires: Mon, 01 Jan 1990 00:00:00 GMT");
 
-// File lưu số đếm
 $counterFile = 'counter.txt';
-
-// Tăng số đếm (đọc và ghi file một lần duy nhất)
 $count = file_exists($counterFile) ? (int) file_get_contents($counterFile) + 1 : 1;
 file_put_contents($counterFile, $count, LOCK_EX);
-
-// Định dạng số đếm với 4 chữ số
 $formattedCount = str_pad($count, 4, "0", STR_PAD_LEFT);
 
-// Kích thước cố định
-$textWidth = 55;
-$countWidth = 50;
-$height = 26;
-$totalWidth = 105; // Tổng chiều rộng
-
-// Xuất SVG
-echo '<?xml version="1.0" encoding="UTF-8"?>';
-?>
+echo <<<EOT
+<?xml version="1.0" encoding="UTF-8"?>
 <svg width="105" height="26" xmlns="http://www.w3.org/2000/svg">
     <defs>
         <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -32,15 +19,10 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
         </linearGradient>
     </defs>
 
-    <!-- Nền chính (bo tròn nhẹ) -->
     <rect width="105" height="26" rx="6" ry="6" fill="#2d2f36" />
-
-    <!-- Phần chữ "Visits" -->
     <text x="14" y="18" font-size="12" fill="white" font-family="Poppins, sans-serif" font-weight="bold">Visits</text>
-
-    <!-- Ô số (bo tròn bên phải) -->
     <rect x="55" width="50" height="26" rx="6" ry="6" fill="url(#blueGradient)" />
-
-    <!-- Số đếm -->
-    <text x="80" y="18" font-size="12" fill="white" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="bold"><?php echo htmlspecialchars($formattedCount); ?></text>
+    <text x="80" y="18" font-size="12" fill="white" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="bold">$formattedCount</text>
 </svg>
+EOT;
+?>
